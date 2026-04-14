@@ -8,8 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",  /* <--- 쉼표 꼭 확인하시고 추가 */
-    "deploy": "gh-pages -d dist"     /* <--- 추가 */
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "firebase": "^12.12.0",
