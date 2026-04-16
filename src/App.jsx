@@ -23,7 +23,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
+const db = getFirestore(app, "class-economy-2026");
 
 // 로컬 및 실제 배포(Github Pages) 환경에서 사용할 고정 ID
 const localAppId = 'class-economy-app';
