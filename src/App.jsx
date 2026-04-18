@@ -175,14 +175,11 @@ const App = () => {
         const conf = snap.data();
         if(!conf.teacherId) conf.teacherId = 'admin';
         setConfig(conf);
-        if (conf.teacherUid === user.uid) setCurrentRole('teacher');
       }
     }, (err) => console.error(`Err listening to config: ` + err.message)));
 
     subscribe('students', (data) => {
       setAllStudents(data);
-      // 로그인 화면 복귀 시 내 계정이 배정되어 있으면 자동 이동
-      if (data.some(s => s.uid === user.uid)) setCurrentRole('student');
     });
 
     // 최근 거래 내역 시간 역순 정렬 (ID 앞부분이 timestamp인 것을 활용)
@@ -336,10 +333,20 @@ const App = () => {
   };
 
   const handleLogout = async () => {
-    setCurrentRole(null);
-    setLoginId('');
-    setLoginPw('');
-  };
+  try {
+    if (currentRole === 'teacher') {
+      await setDoc(getDocRef('settings', 'config'), { teacherUid: null }, { merge: true });
+    } else if (currentRole === 'student' && studentData) {
+      await setDoc(getDocRef('students', studentData.id), { uid: null }, { merge: true });
+    }
+  } catch (err) {
+    console.error('Logout cleanup error: ' + err.message);
+  }
+  setCurrentRole(null);
+  setLoginId('');
+  setLoginPw('');
+};
+
 
 
   // --------------------------------------------------------
