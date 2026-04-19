@@ -23,9 +23,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// ★수정된 부분: 오류를 유발했던 존재하지 않는 DB 이름 지정을 삭제하고, 
-// 파이어베이스가 기본(default) 창고를 자동으로 찾도록 원상복구했습니다.
-const db = getFirestore(app);
+const db = getFirestore(app, "class-economy-2026");
+
 
 // 로컬 및 실제 배포(Github Pages) 환경에서 사용할 고정 ID
 const localAppId = 'class-economy-app';
